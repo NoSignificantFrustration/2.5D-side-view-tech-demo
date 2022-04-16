@@ -167,7 +167,11 @@ public struct GridPathfindingJob : IJob
             current = workingGrid[current].parentIndex;
             //Debug.Log(current);
         }
-
+        if (!prevDir.Equals(workingGrid[prevCell].gridPos - workingGrid[current].gridPos))
+        {
+            path.Add(prevCell);
+        }
+        
         //path.RemoveAt(0);
         //path.RemoveAt(0);
         //path.Add(startCell);

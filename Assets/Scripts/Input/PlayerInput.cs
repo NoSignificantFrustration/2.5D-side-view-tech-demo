@@ -5,11 +5,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : InputBase
 {
-    public override Vector2 movementInput { get => controls.Player_Normal.Movement.ReadValue<Vector2>(); }
-    public override Vector2 aimPos { get => aimPos; protected set => aimPos = value; }
-    public override bool isJumpPressed { get => controls.Player_Normal.Jump.IsPressed(); }
+    public override Vector2 movementInput { get => controls.Player_Normal.Movement.ReadValue<Vector2>(); set => movementInput = value; }
+    public override Vector2 aimPos { get => aimPos; set => aimPos = value; }
+    public override bool isJumpPressed { get => controls.Player_Normal.Jump.IsPressed(); set => isJumpPressed = value; }
 
-    public PlayerControls controls;
+    public PlayerControls controls { get; protected set; }
+
+    
+    protected float jumpBuffer = 5f;
+    protected float groundMemory = 5f;
+
+
+    
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -33,7 +41,8 @@ public class PlayerInput : InputBase
 
     public override void EvaluateMovement()
     {
-        
+        jumpBuffer += Time.deltaTime;
+        groundMemory += Time.deltaTime;
     }
 
     private void OnEnable()

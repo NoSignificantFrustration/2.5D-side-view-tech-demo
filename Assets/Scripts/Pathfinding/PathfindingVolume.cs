@@ -323,8 +323,9 @@ public class PathfindingVolume : MonoBehaviour
 
     public int2 worldToGridPos(Vector3 worldPos)
     {
-        float percentX = (worldPos.x - cellRadius + areaSize.x / 2) / areaSize.x;
-        float percentY = (worldPos.y - cellRadius + areaSize.y / 2) / areaSize.y;
+        Vector2 pos = transform.position;
+        float percentX = (worldPos.x - pos.x - cellRadius + areaSize.x / 2) / areaSize.x;
+        float percentY = (worldPos.y - pos.y - cellRadius + areaSize.y / 2) / areaSize.y;
 
         percentX = math.clamp(percentX, 0f, 1f);
         percentY = math.clamp(percentY, 0f, 1f);
