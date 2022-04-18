@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GroundController : ControllerBase
 {
@@ -10,12 +9,21 @@ public class GroundController : ControllerBase
     [SerializeField] protected float jumpDuration;
     [SerializeField] protected float fallGravityMultiplier;
 
-    protected bool isGrounded = false;
-    protected bool isJumping = false;
-    protected float jumpTimeLimit;
+    public bool isGrounded { get; protected set; }
+    public UnityEvent groundReachedEvent { get; protected set; }
+    public bool isJumping { get; protected set; }
+    public float jumpTimeLimit { get; protected set; }
     protected LayerMask groundMask;
     protected Vector3 groundNormalVector;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        groundReachedEvent = new UnityEvent();
+        isGrounded = true;
+        isJumping = false;
+        jumpTimeLimit = 0f;
+    }
 
     protected virtual void Start()
     {
@@ -27,18 +35,9 @@ public class GroundController : ControllerBase
     protected override void Update()
     {
         base.Update();
-        if (movementInput.x > 0)
-        {
-            transform.eulerAngles = new Vector3(0f, 0f, 0f);
-        }
-        else if (movementInput.x < 0)
-        {
-            transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        }
 
-
-
-        if (input.isJumpPressed && isJumping)
+        
+        if (input.isJumpPressed)
         {
 
             if (jumpTimeLimit > 0)
@@ -46,16 +45,14 @@ public class GroundController : ControllerBase
                 rb.velocity = new Vector3(rb.velocity.x, jumpForce);
                 jumpTimeLimit -= Time.deltaTime;
             }
-            else
-            {
-                isJumping = false;
-            }
+            
         }
+        
     }
 
     protected virtual void FixedUpdate()
     {
-        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.75f, 0f), Vector3.down, out RaycastHit hitinfo, 0.5f, groundMask))
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.75f, 0f), Vector3.down, out RaycastHit hitinfo, 1f, groundMask))
         {
             groundNormalVector = hitinfo.normal;
         }
@@ -71,12 +68,14 @@ public class GroundController : ControllerBase
             rb.AddForce(new Vector3(movementInput.x * acceleration, -groundNormalVector.x, 0f), ForceMode.Impulse);
             collider.material.dynamicFriction = 0f;
             collider.material.staticFriction = 0f;
+            collider.material.frictionCombine = PhysicMaterialCombine.Minimum;
         }
         else
         {
-            rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, 0f);
+            //rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, 0f);
             collider.material.dynamicFriction = 1f;
             collider.material.staticFriction = 1f;
+            collider.material.frictionCombine = PhysicMaterialCombine.Maximum;
         }
 
 
@@ -106,14 +105,42 @@ public class GroundController : ControllerBase
     {
         if (Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - 0.8f), 0.4f, groundMask))
         {
+            if (!isGrounded)
+            {
+                isJumping = false;
+                groundReachedEvent.Invoke();
+                //Debug.Log(Time.deltaTime + " Ground reached");
+            }
             isGrounded = true;
             return true;
         }
         else
         {
+           
+            
             isGrounded = false;
             return false;
         }
+    }
+
+    public virtual bool CheckLedge(float xDirection)
+    {
+        if (xDirection == 0 || !isGrounded)
+        {
+            return false;
+        }
+
+        if (xDirection > 0)
+        {
+            return !Physics.Raycast(new Vector3(transform.position.x + 1f, transform.position.y + 1f, transform.position.z), groundNormalVector * -1, 4f, groundMask);
+
+        }
+        else
+        {
+            return !Physics.Raycast(new Vector3(transform.position.x - 1f, transform.position.y + 1f, transform.position.z), groundNormalVector * -1, 4f, groundMask);
+        }
+        
+        
     }
 
     protected virtual void JumpPressed()
@@ -136,7 +163,7 @@ public class GroundController : ControllerBase
 
     protected virtual void JumpReleased()
     {
-        isJumping = false;
+        
         jumpTimeLimit = 0f;
     }
 
@@ -145,4 +172,10 @@ public class GroundController : ControllerBase
         input.jumpPressEvent.RemoveListener(JumpPressed);
         input.jumpReleaseEvent.RemoveListener(JumpReleased);
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), new Vector3(-4, -4));
+    //}
 }

@@ -29,6 +29,15 @@ public abstract class ControllerBase : MonoBehaviour
         input.EvaluateMovement();
 
         movementInput = input.movementInput;
+
+        if (movementInput.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
+        else if (movementInput.x < 0)
+        {
+            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
     }
 
     protected virtual void ApplyGravity()

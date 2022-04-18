@@ -5,9 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : InputBase
 {
-    public override Vector2 movementInput { get => controls.Player_Normal.Movement.ReadValue<Vector2>(); set => movementInput = value; }
-    public override Vector2 aimPos { get => aimPos; set => aimPos = value; }
-    public override bool isJumpPressed { get => controls.Player_Normal.Jump.IsPressed(); set => isJumpPressed = value; }
+    public override Vector2 movementInput { get => controls.Player_Normal.Movement.ReadValue<Vector2>(); protected set => movementInput = value; }
+    public override bool isJumpPressed { get => controls.Player_Normal.Jump.IsPressed(); protected set => isJumpPressed = value; }
 
     public PlayerControls controls { get; protected set; }
 
@@ -18,11 +17,10 @@ public class PlayerInput : InputBase
 
     
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         controls = new PlayerControls();
-        jumpPressEvent = new UnityEngine.Events.UnityEvent();
-        jumpReleaseEvent = new UnityEngine.Events.UnityEvent();
         controls.Player_Normal.Jump.started += SpacePressed;
         controls.Player_Normal.Jump.canceled += SpaceReleased;
     }
