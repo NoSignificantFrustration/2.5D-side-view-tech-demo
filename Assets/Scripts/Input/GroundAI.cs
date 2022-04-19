@@ -7,7 +7,7 @@ public abstract class GroundAI : AIBase
 
     [field: SerializeField] public virtual Vector2 targetReachedTreshold { get; protected set; }
     public GraphPathfindingAgent pathfindingAgent { get; protected set; }
-    public PathNode pathNode { get; protected set; }
+    public PathNode nextNode { get; protected set; }
 
     public GroundController controller { get; protected set; }
 

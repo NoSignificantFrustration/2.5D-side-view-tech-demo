@@ -10,7 +10,7 @@ public class GroundController : ControllerBase
     [SerializeField] protected float fallGravityMultiplier;
 
     public bool isGrounded { get; protected set; }
-    public UnityEvent groundReachedEvent { get; protected set; }
+    public Action groundReachedEvent { get; set; }
     public bool isJumping { get; protected set; }
     public float jumpTimeLimit { get; protected set; }
     protected LayerMask groundMask;
@@ -19,7 +19,6 @@ public class GroundController : ControllerBase
     protected override void Awake()
     {
         base.Awake();
-        groundReachedEvent = new UnityEvent();
         isGrounded = true;
         isJumping = false;
         jumpTimeLimit = 0f;
@@ -27,8 +26,8 @@ public class GroundController : ControllerBase
 
     protected virtual void Start()
     {
-        input.jumpPressEvent.AddListener(JumpPressed);
-        input.jumpReleaseEvent.AddListener(JumpReleased);
+        input.jumpPressEvent += JumpPressed;
+        input.jumpReleaseEvent += JumpReleased;
         groundMask = LayerMask.GetMask("Ground");
     }
 
@@ -108,7 +107,7 @@ public class GroundController : ControllerBase
             if (!isGrounded)
             {
                 isJumping = false;
-                groundReachedEvent.Invoke();
+                groundReachedEvent?.Invoke();
                 //Debug.Log(Time.deltaTime + " Ground reached");
             }
             isGrounded = true;
@@ -169,8 +168,8 @@ public class GroundController : ControllerBase
 
     protected virtual void OnDisable()
     {
-        input.jumpPressEvent.RemoveListener(JumpPressed);
-        input.jumpReleaseEvent.RemoveListener(JumpReleased);
+        input.jumpPressEvent -= JumpPressed;
+        input.jumpReleaseEvent -= JumpReleased;
     }
 
     //private void OnDrawGizmos()

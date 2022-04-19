@@ -52,11 +52,11 @@ public class PathNode : MonoBehaviour
     [System.Serializable]
     public class PathNodeConnection
     {
-        public PathNode neighbour;
-        PathNodeTransitionMethod transitionMethod;
-        public int maxHeight;
-        public bool oneDirectional;
-        
+        [SerializeField] public PathNode neighbour;
+        [SerializeField] PathNodeTransitionMethod transitionMethod;
+        [SerializeField] public int maxHeight;
+        [SerializeField] public bool oneDirectional;
+        [SerializeField] public bool jump;
     }
 
     [System.Serializable]
