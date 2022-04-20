@@ -56,7 +56,6 @@ public class PathNode : MonoBehaviour
         [SerializeField] PathNodeTransitionMethod transitionMethod;
         [SerializeField] public int maxHeight;
         [SerializeField] public bool oneDirectional;
-        [SerializeField] public bool jump;
     }
 
     [System.Serializable]

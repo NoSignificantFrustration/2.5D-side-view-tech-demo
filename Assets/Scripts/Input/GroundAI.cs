@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GroundAI : AIBase
+public abstract class GroundAI : InputBase
 {
 
     [field: SerializeField] public virtual Vector2 targetReachedTreshold { get; protected set; }

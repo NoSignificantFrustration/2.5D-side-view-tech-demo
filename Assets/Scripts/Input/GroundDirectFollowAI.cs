@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GroundDirectFollowAI : GroundAI
 {
+
+    [SerializeField] public Transform targetEntity;
     public override void EvaluateMovement()
     {
         Vector2 dir =  targetEntity.position - transform.position;

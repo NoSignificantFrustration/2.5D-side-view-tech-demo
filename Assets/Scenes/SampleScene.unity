@@ -5271,6 +5271,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &444375810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 444375811}
+  - component: {fileID: 444375812}
+  m_Layer: 0
+  m_Name: PathNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &444375811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444375810}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4, y: -18.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2113464299}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &444375812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444375810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28f5ab91b3938048880f784068aabae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <connections>k__BackingField:
+  - neighbour: {fileID: 0}
+    transitionMethod: 0
+    maxHeight: 0
+    oneDirectional: 0
+  pathfindingVolume: {fileID: 0}
+  id: 0
+  groundGroup: 0
+  blocked: 0
 --- !u!43 &447657549
 Mesh:
   m_ObjectHideFlags: 0
@@ -5840,7 +5893,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7317437, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -11498,9 +11551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e24232aeb2fe14c8ce66266c04ee14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <targetPos>k__BackingField: {x: 0, y: 0}
-  <targetEntity>k__BackingField: {fileID: 1956303894}
   <targetReachedTreshold>k__BackingField: {x: 2, y: 0}
+  targetEntity: {fileID: 1956303894}
 --- !u!114 &1904296795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12678,7 +12730,8 @@ Transform:
   m_LocalPosition: {x: 17, y: 17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 444375811}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

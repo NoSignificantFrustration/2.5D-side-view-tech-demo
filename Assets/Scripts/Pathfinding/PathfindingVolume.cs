@@ -544,7 +544,6 @@ public class PathfindingVolume : MonoBehaviour
                 GraphConnectionInfo connectionInfo = new GraphConnectionInfo();
                 connectionInfo.targetID = pathNodes[i].connections[j].neighbour.id;
                 connectionInfo.maxHeight = pathNodes[i].connections[j].maxHeight;
-                connectionInfo.jump = pathNodes[i].connections[j].jump;
                 connectionInfoList.Add(connectionInfo);
             }
         }
@@ -615,5 +614,4 @@ public struct GraphConnectionInfo
 {
     public int targetID;
     public int maxHeight;
-    public bool jump;
 }
