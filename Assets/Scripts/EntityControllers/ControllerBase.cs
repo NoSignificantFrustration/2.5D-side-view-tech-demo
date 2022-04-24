@@ -13,7 +13,7 @@ public abstract class ControllerBase : MonoBehaviour
     protected Rigidbody rb;
     protected Vector3 gravity;
     new protected Collider collider;
-
+    protected bool facingRight;
 
     protected virtual void Awake()
     {
@@ -21,7 +21,11 @@ public abstract class ControllerBase : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
         gravity = new Vector3(0f, baseGravity);
-        
+        if (transform.localRotation.y != 0)
+        {
+            //This looks counterintuitive, but it solves the problem
+            facingRight = true;
+        }
     }
 
     protected virtual void Update()
@@ -30,19 +34,34 @@ public abstract class ControllerBase : MonoBehaviour
 
         movementInput = input.movementInput;
 
-        if (movementInput.x > 0)
+        if (input.isAimPressed)
         {
-            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            if (facingRight != input.aimDir.x > 0)
+            {
+                Flip();
+            }
         }
-        else if (movementInput.x < 0)
+        else
         {
-            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            if (facingRight != input.movementInput.x < 0 && input.movementInput.x != 0)
+            {
+                Flip();
+            }
         }
+        
     }
 
     protected virtual void ApplyGravity()
     {
         rb.AddForce(gravity, ForceMode.Acceleration);
+    }
+
+    protected virtual void Flip()
+    {
+
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
+        
     }
 
 }

@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerInput : InputBase
 {
     public override Vector2 movementInput { get => controls.Player_Normal.Movement.ReadValue<Vector2>(); protected set => movementInput = value; }
-    public override bool isJumpPressed { get => controls.Player_Normal.Jump.IsPressed(); protected set => isJumpPressed = value; }
+    public override bool isJumpPressed { get => controls.Player_Normal.Jump.IsPressed(); protected set => base.isJumpPressed = value; }
+    public override bool isAimPressed { get => controls.Player_Normal.RMB.IsPressed(); protected set => base.isAimPressed = value; }
 
     public PlayerControls controls { get; protected set; }
 
@@ -41,6 +42,9 @@ public class PlayerInput : InputBase
     {
         jumpBuffer += Time.deltaTime;
         groundMemory += Time.deltaTime;
+        Vector2 mouseScreenPos = controls.Player_Normal.MouseMovement.ReadValue<Vector2>();
+        aimPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, -Camera.main.transform.position.z));
+        aimDir = ((Vector2)transform.position - aimPos).normalized;
     }
 
     private void OnEnable()

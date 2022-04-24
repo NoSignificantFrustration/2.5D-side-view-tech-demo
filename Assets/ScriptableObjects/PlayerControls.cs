@@ -44,6 +44,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LMB"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c39cd6a-5fa0-4cb9-a1ba-da5419465ce0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RMB"",
+                    ""type"": ""Button"",
+                    ""id"": ""1db23532-5bf1-446d-b0a0-a32c8afcf3b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""4eca8691-933e-4a07-bc89-eb802ce28876"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -112,6 +139,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9fa53061-d00c-44cd-9764-f30a502e3fca"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LMB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""927f1b32-78d6-46f3-9680-4d39fc9d11ca"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""50604f3a-405b-4c05-86eb-e84703686f9d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RMB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +182,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Normal = asset.FindActionMap("Player_Normal", throwIfNotFound: true);
         m_Player_Normal_Movement = m_Player_Normal.FindAction("Movement", throwIfNotFound: true);
         m_Player_Normal_Jump = m_Player_Normal.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Normal_LMB = m_Player_Normal.FindAction("LMB", throwIfNotFound: true);
+        m_Player_Normal_RMB = m_Player_Normal.FindAction("RMB", throwIfNotFound: true);
+        m_Player_Normal_MouseMovement = m_Player_Normal.FindAction("MouseMovement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,12 +246,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IPlayer_NormalActions m_Player_NormalActionsCallbackInterface;
     private readonly InputAction m_Player_Normal_Movement;
     private readonly InputAction m_Player_Normal_Jump;
+    private readonly InputAction m_Player_Normal_LMB;
+    private readonly InputAction m_Player_Normal_RMB;
+    private readonly InputAction m_Player_Normal_MouseMovement;
     public struct Player_NormalActions
     {
         private @PlayerControls m_Wrapper;
         public Player_NormalActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Normal_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Normal_Jump;
+        public InputAction @LMB => m_Wrapper.m_Player_Normal_LMB;
+        public InputAction @RMB => m_Wrapper.m_Player_Normal_RMB;
+        public InputAction @MouseMovement => m_Wrapper.m_Player_Normal_MouseMovement;
         public InputActionMap Get() { return m_Wrapper.m_Player_Normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -204,6 +273,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnJump;
+                @LMB.started -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnLMB;
+                @LMB.performed -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnLMB;
+                @LMB.canceled -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnLMB;
+                @RMB.started -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnRMB;
+                @RMB.performed -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnRMB;
+                @RMB.canceled -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnRMB;
+                @MouseMovement.started -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnMouseMovement;
+                @MouseMovement.performed -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnMouseMovement;
+                @MouseMovement.canceled -= m_Wrapper.m_Player_NormalActionsCallbackInterface.OnMouseMovement;
             }
             m_Wrapper.m_Player_NormalActionsCallbackInterface = instance;
             if (instance != null)
@@ -214,6 +292,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @LMB.started += instance.OnLMB;
+                @LMB.performed += instance.OnLMB;
+                @LMB.canceled += instance.OnLMB;
+                @RMB.started += instance.OnRMB;
+                @RMB.performed += instance.OnRMB;
+                @RMB.canceled += instance.OnRMB;
+                @MouseMovement.started += instance.OnMouseMovement;
+                @MouseMovement.performed += instance.OnMouseMovement;
+                @MouseMovement.canceled += instance.OnMouseMovement;
             }
         }
     }
@@ -222,5 +309,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnLMB(InputAction.CallbackContext context);
+        void OnRMB(InputAction.CallbackContext context);
+        void OnMouseMovement(InputAction.CallbackContext context);
     }
 }

@@ -162,10 +162,15 @@ public class PathfindingVolume : MonoBehaviour
                     //}
                     if (walkable)
                     {
-                        for (int i = 0; i < walkableHeight; i++)
+                        for (int i = 0; i <= walkableHeight; i++)
                         {
                             walkableArray[(y - i) * gridSize.x + x] = true;
                         }
+                        //int belowIndex = (y - (walkableHeight) - 1) * gridSize.x + x;
+                        //if (belowIndex >= 0)
+                        //{
+                        //    walkableArray[belowIndex] = true;
+                        //}
                     }
 
                 }
@@ -231,9 +236,9 @@ public class PathfindingVolume : MonoBehaviour
             {
                 int arrayPos = y * gridSize.x + x;
 
-                if (!gridTraversableArray[arrayPos] || exploredSet[arrayPos])
+                if (exploredSet[arrayPos])
                 {
-                    exploredSet[arrayPos] = true;
+                    //exploredSet[arrayPos] = true;
                     continue;
                 }
                 else if (!walkableArray[arrayPos])
@@ -257,7 +262,7 @@ public class PathfindingVolume : MonoBehaviour
 
                         for (int i = 0; i < neighbourIndexList.Count; i++)
                         {
-                            if (!gridTraversableArray[neighbourIndexList[i]] || exploredSet[neighbourIndexList[i]])
+                            if (exploredSet[neighbourIndexList[i]])
                             {
                                 exploredSet[neighbourIndexList[i]] = true;
                                 continue;

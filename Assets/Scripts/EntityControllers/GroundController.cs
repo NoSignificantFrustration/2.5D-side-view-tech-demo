@@ -64,6 +64,8 @@ public class GroundController : ControllerBase
 
         if (movementInput.x != 0)
         {
+
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             rb.AddForce(new Vector3(movementInput.x * acceleration, -groundNormalVector.x, 0f), ForceMode.Impulse);
             collider.material.dynamicFriction = 0f;
             collider.material.staticFriction = 0f;
@@ -71,6 +73,7 @@ public class GroundController : ControllerBase
         }
         else
         {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
             //rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, 0f);
             collider.material.dynamicFriction = 1f;
             collider.material.staticFriction = 1f;
@@ -79,7 +82,7 @@ public class GroundController : ControllerBase
 
 
 
-        if (Math.Abs(rb.velocity.x) > speed)
+        if (Math.Abs(rb.velocity.x) > speed * movementInput.x)
         {
             rb.velocity = new Vector3(speed * movementInput.x, rb.velocity.y, 0f);
         }
@@ -131,12 +134,12 @@ public class GroundController : ControllerBase
 
         if (xDirection > 0)
         {
-            return !Physics.Raycast(new Vector3(transform.position.x + 1f, transform.position.y + 1f, transform.position.z), groundNormalVector * -1, 4f, groundMask);
+            return !Physics.Raycast(new Vector3(transform.position.x + 1f, transform.position.y + 1f, transform.position.z), Vector3.down, 4f, groundMask);
 
         }
         else
         {
-            return !Physics.Raycast(new Vector3(transform.position.x - 1f, transform.position.y + 1f, transform.position.z), groundNormalVector * -1, 4f, groundMask);
+            return !Physics.Raycast(new Vector3(transform.position.x - 1f, transform.position.y + 1f, transform.position.z), Vector3.down, 4f, groundMask);
         }
         
         

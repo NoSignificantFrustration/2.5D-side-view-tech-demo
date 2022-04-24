@@ -9,6 +9,9 @@ public abstract class InputBase : MonoBehaviour
 
     public virtual Vector2 movementInput { get; protected set; }
     public virtual Vector2 aimPos { get; protected set; }
+    public virtual Vector2 aimDir { get; protected set; }
+    public virtual bool isFirePressed { get; protected set; }
+    public virtual bool isAimPressed { get; protected set; }
     public virtual bool isJumpPressed { get; protected set; }
 
     public Action jumpPressEvent { get; set; }
