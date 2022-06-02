@@ -17,11 +17,14 @@ public abstract class InputBase : MonoBehaviour
     public Action jumpPressEvent { get; set; }
     public Action jumpReleaseEvent { get; set; }
 
-    public abstract void EvaluateMovement();
+    public EntityBase self { get; protected set; }
+
+    public abstract void EvaluateActions();
+    public abstract void TimerUpdate();
 
     protected virtual void Awake()
     {
-        
+        self = GetComponent<EntityBase>();
     }
 
 }

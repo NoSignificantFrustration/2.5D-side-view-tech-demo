@@ -38,7 +38,7 @@ public class PlayerInput : InputBase
 
     }
 
-    public override void EvaluateMovement()
+    public override void EvaluateActions()
     {
         jumpBuffer += Time.deltaTime;
         groundMemory += Time.deltaTime;
@@ -55,5 +55,10 @@ public class PlayerInput : InputBase
     private void OnDisable()
     {
         controls.Disable();
+    }
+
+    public override void TimerUpdate()
+    {
+        throw new System.NotImplementedException();
     }
 }

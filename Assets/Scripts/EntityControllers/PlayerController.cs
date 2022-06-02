@@ -27,14 +27,17 @@ public class PlayerController : GroundController
             //weapon.transform.right = input.aimDir;
             //weapon.transform.localRotation = Quaternion.LookRotation(input.aimDir);
             //weapon.transform.eulerAngles = new Vector3(0, 0, Vector3.Angle(transform.right, input.aimDir));
+            //weapon.transform.rotation = Quaternion.FromToRotation(Vector3.up, input.aimDir);
+
         }
         else
         {
             weapon.transform.rotation = transform.rotation;
         }
         
-        //weapon.transform.rotation = Quaternion.
+        
         //Debug.Log(input.aimDir);
+        //Debug.Log(weapon.transform.right);
     }
 
     protected override bool CheckGround()
@@ -63,5 +66,11 @@ public class PlayerController : GroundController
             Jump();
         }
         
+    }
+
+    protected override void Flip()
+    {
+        base.Flip();
+        weapon.transform.Rotate(0f, 180f, 0f);
     }
 }

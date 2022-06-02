@@ -5,7 +5,7 @@ public class GroundDirectFollowAI : GroundAI
 {
 
     [SerializeField] public Transform targetEntity;
-    public override void EvaluateMovement()
+    public override void EvaluateActions()
     {
         Vector2 dir =  targetEntity.position - transform.position;
         if (controller.CheckLedge(dir.x) || math.abs(dir.x) <= targetReachedTreshold.x)
@@ -36,5 +36,15 @@ public class GroundDirectFollowAI : GroundAI
 
             movementInput = new Vector2(movx, movy);
         }
+    }
+
+    public override void TimerUpdate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void FindTarget()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -30,7 +30,7 @@ public abstract class ControllerBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        input.EvaluateMovement();
+        input.EvaluateActions();
 
         movementInput = input.movementInput;
 

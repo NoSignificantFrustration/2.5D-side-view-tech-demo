@@ -11,6 +11,8 @@ public abstract class GroundAI : InputBase
 
     public GroundController controller { get; protected set; }
 
+    protected abstract void FindTarget();
+
     protected override void Awake()
     {
         base.Awake();
