@@ -90,15 +90,15 @@ public class GroundController : ControllerBase
 
         if (rb.velocity.y < 0)
         {
-            gravity.y = -baseGravity * fallGravityMultiplier;
+            gravity = new Vector3(gravity.x, -baseGravity * fallGravityMultiplier, gravity.z);
         }
         else if (movementInput.x == 0 && isGrounded && !input.isJumpPressed)
         {
-            gravity.y = -baseGravity * 100f;
+            gravity = new Vector3(gravity.x, -baseGravity * 100f, gravity.z);
         }
         else
         {
-            gravity.y = -baseGravity;
+            gravity = new Vector3(gravity.x, -baseGravity, gravity.z);
         }
         ApplyGravity();
     }

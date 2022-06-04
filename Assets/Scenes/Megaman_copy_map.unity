@@ -4356,6 +4356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1330018517}
+  - component: {fileID: 1330018520}
   - component: {fileID: 1330018518}
   - component: {fileID: 1330018515}
   - component: {fileID: 1330018519}
@@ -4459,11 +4460,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1330018510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12e24232aeb2fe14c8ce66266c04ee14, type: 3}
+  m_Script: {fileID: 11500000, guid: 1748ffb7a14ed0447a0a72fc251c0d6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <targetReachedTreshold>k__BackingField: {x: 2, y: 2}
-  targetEntity: {fileID: 1208811062}
+  <aimPivot>k__BackingField: {fileID: 2110338311}
+  <sight>k__BackingField: {fileID: 1330018519}
+  <lookCooldown>k__BackingField: 0.24
+  <attentionSpan>k__BackingField: 2.2
 --- !u!4 &1330018517
 Transform:
   m_ObjectHideFlags: 0
@@ -4489,7 +4493,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1330018510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b636bfc9c082c245b2e3dd513c02663, type: 3}
+  m_Script: {fileID: 11500000, guid: 478d95e0f396e4d458da253f98d261a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
@@ -4498,6 +4502,7 @@ MonoBehaviour:
   jumpForce: 20
   jumpDuration: 0.2
   fallGravityMultiplier: 2
+  weapon: {fileID: 2110338310}
 --- !u!114 &1330018519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4513,6 +4518,22 @@ MonoBehaviour:
   <viewDistance>k__BackingField: 20.7
   <fieldOfView>k__BackingField: 14.92
   <positionOffset>k__BackingField: {x: 0, y: 0}
+--- !u!114 &1330018520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330018510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36451e3bf27b9594db2044965d70a4be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isTargetable>k__BackingField: 0
+  <faction>k__BackingField: 1
+  <health>k__BackingField: 0
+  <maxHealth>k__BackingField: 0
 --- !u!1 &1356098342
 GameObject:
   m_ObjectHideFlags: 0
@@ -4542,8 +4563,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48f0a7cbafe7ec48965991fb519e148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <viewDistance>k__BackingField: 28.8
-  <fieldOfView>k__BackingField: 54.54
+  <viewDistance>k__BackingField: 25.08
+  <fieldOfView>k__BackingField: 52.9
   <positionOffset>k__BackingField: {x: 0, y: 0}
 --- !u!4 &1356098344
 Transform:

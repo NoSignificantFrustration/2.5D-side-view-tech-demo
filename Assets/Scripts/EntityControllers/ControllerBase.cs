@@ -8,12 +8,12 @@ public abstract class ControllerBase : MonoBehaviour
     [SerializeField] protected float acceleration;
     [SerializeField] protected float baseGravity;
 
-    protected InputBase input;
-    protected Vector2 movementInput;
-    protected Rigidbody rb;
-    protected Vector3 gravity;
-    new protected Collider collider;
-    protected bool facingRight;
+    public InputBase input { get; protected set; }
+    public Vector2 movementInput { get; protected set; }
+    public Rigidbody rb { get; protected set; }
+    public Vector3 gravity { get; protected set; }
+    new public Collider collider { get; protected set; }
+    public bool facingRight { get; protected set; }
 
     protected virtual void Awake()
     {

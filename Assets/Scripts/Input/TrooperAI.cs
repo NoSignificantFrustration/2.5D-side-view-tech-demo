@@ -6,6 +6,8 @@ public class TrooperAI : GroundAI
 {
 
     public Vector3 guardPos { get; protected set; }
+    public bool guardDirection { get; protected set; }
+
     [field: SerializeField] public Transform aimPivot { get; protected set; }
     public EntityBase target { get; protected set; }
     public Vector3 targetPos { get; protected set; }
@@ -20,6 +22,8 @@ public class TrooperAI : GroundAI
     {
         base.Awake();
         guardPos = transform.position;
+        guardDirection = controller.facingRight;
+        aiState = AIState.Guarding;
     }
     public override void EvaluateActions()
     {
@@ -36,6 +40,8 @@ public class TrooperAI : GroundAI
             targetPos = target.transform.position;
             aimPos = targetPos;
             aimDir = ((Vector2)aimPivot.position - aimPos).normalized;
+
+            aiState = AIState.Chasing;
         }
         else
         {
@@ -45,16 +51,40 @@ public class TrooperAI : GroundAI
 
         float speed = 1f;
 
+
+
         if (_attentionSpan < 0)
         {
+            aiState = AIState.Returning;
             targetPos = guardPos;
             speed = 0.25f;
         }
 
+        float currentTargetReachedTreshold = targetReachedTreshold.x;
+        if (aiState == AIState.Returning)
+        {
+            currentTargetReachedTreshold = 0.2f;
+        }
+
         Vector2 dir = targetPos - transform.position;
-        if (controller.CheckLedge(dir.x) || math.abs(dir.x) <= targetReachedTreshold.x)
+        if (controller.CheckLedge(dir.x) )
         {
             movementInput = Vector2.zero;
+        }
+        else if (math.abs(dir.x) <= currentTargetReachedTreshold)
+        {
+            if (aiState == AIState.Returning)
+            {
+                if (guardDirection != controller.facingRight)
+                {
+                    movementInput = new Vector2(movementInput.x / 1000f * -1, 0f);
+                }
+                else
+                {
+                    movementInput = Vector2.zero;
+                    aiState = AIState.Guarding;
+                }
+            }
         }
         else
         {

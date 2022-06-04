@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public abstract class InputBase : MonoBehaviour
 {
 
+    public AIState aiState { get; protected set; }
     public virtual Vector2 movementInput { get; protected set; }
     public virtual Vector2 aimPos { get; protected set; }
     public virtual Vector2 aimDir { get; protected set; }
@@ -27,4 +28,9 @@ public abstract class InputBase : MonoBehaviour
         self = GetComponent<EntityBase>();
     }
 
+}
+
+public enum AIState
+{
+    Guarding, Chasing, Returning
 }
