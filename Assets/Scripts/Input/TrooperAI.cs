@@ -85,6 +85,11 @@ public class TrooperAI : GroundAI
                     aiState = AIState.Guarding;
                 }
             }
+            else
+            {
+                movementInput = Vector2.zero;
+            }
+            
         }
         else
         {
@@ -167,5 +172,10 @@ public class TrooperAI : GroundAI
 
 
 
+    }
+
+    public override void EdgeReached()
+    {
+        movementInput = new Vector2(0f, movementInput.y);
     }
 }

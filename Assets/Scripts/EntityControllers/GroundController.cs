@@ -8,6 +8,7 @@ public class GroundController : ControllerBase
     [SerializeField] protected float jumpForce;
     [SerializeField] protected float jumpDuration;
     [SerializeField] protected float fallGravityMultiplier;
+    [SerializeField, Range(0.5f, 1f)] protected float idleSpeedMultiplier = 0.9f;
 
     public bool isGrounded { get; protected set; }
     public Action groundReachedEvent { get; set; }
@@ -62,7 +63,16 @@ public class GroundController : ControllerBase
 
         CheckGround();
 
-        if (movementInput.x != 0)
+        if (movementInput.x != 0f)
+        {
+            if (CheckLedge(movementInput.x))
+            {
+                input.EdgeReached();
+                movementInput = input.movementInput;
+            }
+        }
+
+        if (movementInput.x != 0f)
         {
 
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
@@ -73,7 +83,15 @@ public class GroundController : ControllerBase
         }
         else
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+            if (isGrounded)
+            {
+                rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+            }
+            else
+            {
+                rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+            }
+            
             //rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, 0f);
             collider.material.dynamicFriction = 1f;
             collider.material.staticFriction = 1f;
@@ -84,7 +102,15 @@ public class GroundController : ControllerBase
 
         if (Math.Abs(rb.velocity.x) > speed * movementInput.x)
         {
-            rb.velocity = new Vector3(speed * movementInput.x, rb.velocity.y, 0f);
+            if (movementInput.x == 0f)
+            {
+                rb.velocity = new Vector3(rb.velocity.x * idleSpeedMultiplier, rb.velocity.y, 0f);
+            }
+            else
+            {
+                rb.velocity = new Vector3(speed * movementInput.x, rb.velocity.y, 0f);
+            }
+            
         }
 
 

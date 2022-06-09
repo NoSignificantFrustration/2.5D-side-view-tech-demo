@@ -22,6 +22,7 @@ public abstract class InputBase : MonoBehaviour
 
     public abstract void EvaluateActions();
     public abstract void TimerUpdate();
+    public abstract void EdgeReached();
 
     protected virtual void Awake()
     {

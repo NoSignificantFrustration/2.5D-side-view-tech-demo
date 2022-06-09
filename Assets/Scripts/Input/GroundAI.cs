@@ -18,4 +18,5 @@ public abstract class GroundAI : InputBase
         base.Awake();
         controller = GetComponent<GroundController>();
     }
+
 }

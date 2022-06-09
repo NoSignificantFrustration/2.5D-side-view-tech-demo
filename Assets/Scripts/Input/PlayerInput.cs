@@ -59,6 +59,11 @@ public class PlayerInput : InputBase
 
     public override void TimerUpdate()
     {
-        throw new System.NotImplementedException();
+        
+    }
+
+    public override void EdgeReached()
+    {
+        
     }
 }
