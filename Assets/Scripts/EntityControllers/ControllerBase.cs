@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class ControllerBase : MonoBehaviour
 {
-    [SerializeField] protected float speed;
-    [SerializeField] protected float acceleration;
-    [SerializeField] protected float baseGravity;
+    [field: SerializeField] public float speed { get; protected set; }
+    [field: SerializeField] public float acceleration { get; protected set; }
+    [field: SerializeField] public float baseGravity { get; protected set; }
 
     public InputBase input { get; protected set; }
     public Vector2 movementInput { get; protected set; }
@@ -17,6 +17,8 @@ public abstract class ControllerBase : MonoBehaviour
 
     protected virtual void Awake()
     {
+        SetupStats();
+
         input = GetComponent<InputBase>();
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
@@ -26,6 +28,8 @@ public abstract class ControllerBase : MonoBehaviour
             //This looks counterintuitive, but it solves the problem
             facingRight = true;
         }
+
+
     }
 
     protected virtual void Update()
@@ -63,5 +67,7 @@ public abstract class ControllerBase : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
         
     }
+
+    protected abstract void SetupStats();
 
 }

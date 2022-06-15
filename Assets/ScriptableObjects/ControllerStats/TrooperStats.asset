@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f55c1888a8a4140bc80050b20b90cc, type: 3}
+  m_Name: TrooperStats
+  m_EditorClassIdentifier: 
+  <speed>k__BackingField: 10
+  <acceleration>k__BackingField: 5
+  <baseGravity>k__BackingField: 60
+  <jumpForce>k__BackingField: 20
+  <jumpDuration>k__BackingField: 0.2
+  <fallGravityMultiplier>k__BackingField: 2
+  <idleSpeedMultiplier>k__BackingField: 0.9

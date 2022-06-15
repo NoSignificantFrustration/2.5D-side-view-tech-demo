@@ -4,11 +4,11 @@ using UnityEngine.Events;
 
 public class GroundController : ControllerBase
 {
-
+    [field: SerializeField] public GroundControllerStats baseStats { get; protected set; }
     [SerializeField] protected float jumpForce;
     [SerializeField] protected float jumpDuration;
     [SerializeField] protected float fallGravityMultiplier;
-    [SerializeField, Range(0.5f, 1f)] protected float idleSpeedMultiplier = 0.9f;
+    [SerializeField, Range(0.5f, 1f)] protected float idleSpeedMultiplier;
 
     public bool isGrounded { get; protected set; }
     public Action groundReachedEvent { get; set; }
@@ -20,9 +20,22 @@ public class GroundController : ControllerBase
     protected override void Awake()
     {
         base.Awake();
+
+
+
         isGrounded = true;
         isJumping = false;
         jumpTimeLimit = 0f;
+    }
+
+    protected override void SetupStats()
+    {
+        speed = baseStats.speed;
+        acceleration = baseStats.acceleration;
+        baseGravity = baseStats.baseGravity;
+        jumpForce = baseStats.jumpForce;
+        jumpDuration = baseStats.jumpDuration;
+        fallGravityMultiplier = baseStats.fallGravityMultiplier;
     }
 
     protected virtual void Start()
