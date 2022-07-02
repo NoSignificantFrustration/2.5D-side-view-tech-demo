@@ -14,7 +14,7 @@ public class GroundController : ControllerBase
     public Action groundReachedEvent { get; set; }
     public bool isJumping { get; protected set; }
     public float jumpTimeLimit { get; protected set; }
-    protected LayerMask groundMask;
+    public LayerMask groundMask { get; protected set; }
     protected Vector3 groundNormalVector;
 
     protected override void Awake()
@@ -90,9 +90,9 @@ public class GroundController : ControllerBase
 
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             rb.AddForce(new Vector3(movementInput.x * acceleration, -groundNormalVector.x, 0f), ForceMode.Impulse);
-            collider.material.dynamicFriction = 0f;
-            collider.material.staticFriction = 0f;
-            collider.material.frictionCombine = PhysicMaterialCombine.Minimum;
+            //collider.material.dynamicFriction = 0f;
+            //collider.material.staticFriction = 0f;
+            //collider.material.frictionCombine = PhysicMaterialCombine.Minimum;
         }
         else
         {
@@ -106,9 +106,9 @@ public class GroundController : ControllerBase
             }
             
             //rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, 0f);
-            collider.material.dynamicFriction = 1f;
-            collider.material.staticFriction = 1f;
-            collider.material.frictionCombine = PhysicMaterialCombine.Maximum;
+            //collider.material.dynamicFriction = 1f;
+            //collider.material.staticFriction = 1f;
+            //collider.material.frictionCombine = PhysicMaterialCombine.Maximum;
         }
 
 

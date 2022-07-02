@@ -10,6 +10,26 @@ public class GroundDirectFollowAI : GroundAI
 
     public override void EvaluateActions()
     {
+        EvaluateMovement();
+    }
+
+    public override void TimerUpdate()
+    {
+        
+    }
+
+    protected override void FindTarget()
+    {
+        
+    }
+
+    public override void EdgeReached()
+    {
+        movementInput = new Vector2(0f, movementInput.y);
+    }
+
+    public override void EvaluateMovement()
+    {
         Vector2 dir = targetEntity.position - transform.position;
         if (controller.CheckLedge(dir.x) || math.abs(dir.x) <= targetReachedTreshold.x)
         {
@@ -39,20 +59,5 @@ public class GroundDirectFollowAI : GroundAI
 
             movementInput = new Vector2(movx, movy);
         }
-    }
-
-    public override void TimerUpdate()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void FindTarget()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void EdgeReached()
-    {
-        movementInput = new Vector2(0f, movementInput.y);
     }
 }

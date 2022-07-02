@@ -6,9 +6,10 @@ using UnityEngine;
 public class SightPerception : MonoBehaviour
 {
 
-    [field: SerializeField, Min(0)] public float viewDistance { get; protected set; }
-    [field: SerializeField, Min(0)] public float fieldOfView { get; protected set; }
+    [field: SerializeField, Min(0f)] public float viewDistance { get; protected set; }
+    [field: SerializeField, Range(0f, 360f)] public float fieldOfView { get; protected set; }
     [field: SerializeField] public Vector2 positionOffset { get; protected set; }
+    [field: SerializeField] public bool showDebug { get; protected set; }
     public LayerMask entityMask { get; protected set; }
     public LayerMask groundMask { get; protected set; }
 
@@ -80,6 +81,8 @@ public class SightPerception : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (!showDebug) return;
+        
         Vector3 pos = transform.position + (Vector3)positionOffset;
 
         Gizmos.color = Color.green;

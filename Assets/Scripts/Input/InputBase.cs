@@ -21,6 +21,7 @@ public abstract class InputBase : MonoBehaviour
     public EntityBase self { get; protected set; }
 
     public abstract void EvaluateActions();
+    public abstract void EvaluateMovement();
     public abstract void TimerUpdate();
     public abstract void EdgeReached();
 
@@ -33,5 +34,5 @@ public abstract class InputBase : MonoBehaviour
 
 public enum AIState
 {
-    Guarding, Chasing, Returning
+    Guarding, Chasing, Attacking, Returning
 }

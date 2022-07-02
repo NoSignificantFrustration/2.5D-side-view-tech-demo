@@ -8,6 +8,7 @@ public class PlayerInput : InputBase
     public override Vector2 movementInput { get => controls.Player_Normal.Movement.ReadValue<Vector2>(); protected set => movementInput = value; }
     public override bool isJumpPressed { get => controls.Player_Normal.Jump.IsPressed(); protected set => base.isJumpPressed = value; }
     public override bool isAimPressed { get => controls.Player_Normal.RMB.IsPressed(); protected set => base.isAimPressed = value; }
+    public override bool isFirePressed { get => controls.Player_Normal.LMB.IsPressed(); protected set => base.isFirePressed = value; }
 
     public PlayerControls controls { get; protected set; }
 
@@ -63,6 +64,11 @@ public class PlayerInput : InputBase
     }
 
     public override void EdgeReached()
+    {
+        
+    }
+
+    public override void EvaluateMovement()
     {
         
     }
