@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
 
-    public float damage;
+    public Damage damage;
     public float timeToLive;
     public Faction faction;
     private int projectileLayerIndex;

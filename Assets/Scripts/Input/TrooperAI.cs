@@ -21,12 +21,18 @@ public class TrooperAI : GroundAI
     public bool canSeeTarget { get; protected set; }
 
 
+
+    protected virtual void OnEnable()
+    {
+        self.onDamageReceivedEvent += OnHit;
+    }
+
     protected override void Awake()
     {
         base.Awake();
         controller = GetComponent<TrooperController>();
         guardPos = transform.position;
-        guardDirection = transform.rotation.eulerAngles.y == 180;
+        guardDirection = transform.rotation.eulerAngles.y == 0;
         //guardDirection = controller.facingRight;
         aiState = AIState.Guarding;
 
@@ -138,68 +144,24 @@ public class TrooperAI : GroundAI
         }
 
 
-        //float currentTargetReachedTreshold = targetReachedTreshold.x;
-        //if (aiState == AIState.Returning)
-        //{
-        //    currentTargetReachedTreshold = 0.2f;
-        //}
+    }
 
+    protected virtual void OnHit(Damage damage)
+    {
+        //if (damage.causer == null) return;
+        if (aiState == AIState.Attacking || canSeeTarget) return;
+        
 
+        _attentionSpan = attentionSpan;
 
-        //Vector2 dir = targetPos - transform.position;
-        //if (aiState == AIState.Attacking)
-        //{
-        //    movementInput = Vector2.zero;
-        //    isFirePressed = true;
-        //}
-        //else if (controller.CheckLedge(dir.x))
-        //{
-        //    movementInput = Vector2.zero;
-        //}
-        //else if (math.abs(dir.x) <= currentTargetReachedTreshold)
-        //{
-        //    if (aiState == AIState.Returning)
-        //    {
-        //        if (guardDirection != controller.facingRight)
-        //        {
-        //            movementInput = new Vector2(movementInput.x / 1000f * -1, 0f);
-        //        }
-        //        else
-        //        {
-        //            movementInput = Vector2.zero;
-        //            aiState = AIState.Guarding;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        movementInput = Vector2.zero;
-        //    }
+        Vector3 pos = transform.position;
 
-        //}
-        //else
-        //{
-        //    float movx = 0f;
-        //    float movy = 0f;
-        //    if (dir.x > 0)
-        //    {
-        //        movx = 1;
-        //    }
-        //    else if (dir.x < 0)
-        //    {
-        //        movx = -1;
-        //    }
+        float xDiff = pos.x - damage.source.transform.position.x;
+        float targetDir = xDiff > 0f ? 1f : -1f;
 
-        //    if (dir.y > 0)
-        //    {
-        //        movy = 1;
-        //    }
-        //    else if (dir.y < 0)
-        //    {
-        //        movy = -1;
-        //    }
-
-        //    movementInput = new Vector2(movx, movy) * speed;
-        //}
+        targetPos = new Vector3(pos.x + targetDir * 10f, pos.y, 0f);
+        aiState = AIState.Chasing;
+        
     }
 
     public override void TimerUpdate()
@@ -331,6 +293,11 @@ public class TrooperAI : GroundAI
 
             movementInput = new Vector2(movx, movy) * speed;
         }
+    }
+
+    protected virtual void OnDisable()
+    {
+        self.onDamageReceivedEvent -= OnHit;
     }
 }
 

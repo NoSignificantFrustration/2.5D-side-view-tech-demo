@@ -20,7 +20,10 @@ public class RangedWeapon : WeaponBase
         bulletObject.transform.right = (Vector2)transform.right;
         bulletObject.GetComponent<Rigidbody>().velocity = bulletObject.transform.right * projectileSpeed;
         Projectile projectile = bulletObject.GetComponent<Projectile>();
-        projectile.damage = attackDamage;
+
+        Damage damage = new Damage(attackDamage, bulletObject, self);
+
+        projectile.damage = damage;
         projectile.timeToLive = 5f;
         projectile.faction = self.faction;
     }

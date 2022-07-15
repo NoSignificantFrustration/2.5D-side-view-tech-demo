@@ -23,7 +23,7 @@ public abstract class ControllerBase : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
         gravity = new Vector3(0f, baseGravity);
-        if (transform.localRotation.y != 0)
+        if (transform.localRotation.y == 0)
         {
             //This looks counterintuitive, but it solves the problem
             facingRight = true;
@@ -47,7 +47,7 @@ public abstract class ControllerBase : MonoBehaviour
         }
         else
         {
-            if (facingRight != input.movementInput.x < 0 && input.movementInput.x != 0)
+            if (facingRight != input.movementInput.x > 0 && input.movementInput.x != 0)
             {
                 Flip();
             }
