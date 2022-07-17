@@ -127,7 +127,8 @@ MonoBehaviour:
   <aimPivot>k__BackingField: {fileID: 586689140933639699}
   <sight>k__BackingField: {fileID: 586689140463569399}
   <lookCooldown>k__BackingField: 0.2
-  <attentionSpan>k__BackingField: 2.02
+  <attentionSpan>k__BackingField: 6
+  <spookTime>k__BackingField: 2
 --- !u!114 &586689140504751725
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,6 +27,12 @@ public class PlayerInput : InputBase
         controls.Player_Normal.Jump.canceled += SpaceReleased;
     }
 
+    protected virtual void Start()
+    {
+        //QualitySettings.vSyncCount = 0;
+        //Application.targetFrameRate = 15;
+    }
+
     private void SpacePressed(InputAction.CallbackContext obj)
     {
         jumpPressEvent?.Invoke();

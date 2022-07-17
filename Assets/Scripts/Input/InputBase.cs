@@ -34,5 +34,5 @@ public abstract class InputBase : MonoBehaviour
 
 public enum AIState
 {
-    Guarding, Chasing, Attacking, Returning
+    Guarding, Chasing, Attacking, Returning, Spooked, Searching
 }

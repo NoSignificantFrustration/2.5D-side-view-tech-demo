@@ -19,7 +19,8 @@ public class TrooperAI : GroundAI
     [field: SerializeField, Min(1f)] public float attentionSpan { get; protected set; }
     public float _attentionSpan { get; protected set; }
     public bool canSeeTarget { get; protected set; }
-
+    [field: SerializeField, Min(0f)] public float spookTime { get; protected set; }
+    public float _spookTime { get; protected set; }
 
 
     protected virtual void OnEnable()
@@ -55,52 +56,81 @@ public class TrooperAI : GroundAI
 
         bool isFacingLedge = controller.CheckLedge(transform.right.x);
 
-        if (canSeeTarget)
+        if (aiState == AIState.Spooked && _spookTime > 0f)
         {
 
-
+        }
+        else if (canSeeTarget)
+        {
             targetPos = target.transform.position;
-            aimPos = targetPos;
-            aimDir = ((Vector2)aimPivot.position - aimPos).normalized;
-
-
-            float distanceToTarget = Vector2.Distance(transform.position, targetPos);
-
-            if (aiState == AIState.Chasing)
+            if (aiState == AIState.Guarding || aiState == AIState.Returning)
             {
-                if (distanceToTarget < trooperController.rangedWeapon.maxAttackRange * trooperController.rangedWeapon.preferredAttackRange)
-                {
-                    aiState = AIState.Attacking;
-                }
-                else if (isFacingLedge)
-                {
-                    aiState = AIState.Attacking;
-                }
-
+                aiState = AIState.Spooked;
+                _spookTime = spookTime;
             }
-            else if (aiState == AIState.Attacking)
+            else
             {
-                if (distanceToTarget > trooperController.rangedWeapon.maxAttackRange && !isFacingLedge)
+
+                if (aiState == AIState.Spooked || aiState == AIState.Searching)
+                {
+                    aiState = AIState.Chasing;
+                }
+
+                aimPos = targetPos;
+                aimDir = ((Vector2)aimPivot.position - aimPos).normalized;
+
+
+                float distanceToTarget = Vector2.Distance(transform.position, targetPos);
+
+                if (aiState == AIState.Chasing)
+                {
+                    if (distanceToTarget < trooperController.rangedWeapon.maxAttackRange * trooperController.rangedWeapon.preferredAttackRange)
+                    {
+                        aiState = AIState.Attacking;
+                    }
+                    else if (isFacingLedge)
+                    {
+                        aiState = AIState.Attacking;
+                    }
+
+                }
+                else if (aiState == AIState.Attacking)
+                {
+                    if (distanceToTarget > trooperController.rangedWeapon.maxAttackRange && !isFacingLedge)
+                    {
+                        aiState = AIState.Chasing;
+                    }
+                }
+                else
                 {
                     aiState = AIState.Chasing;
                 }
             }
-            else
-            {
-                aiState = AIState.Chasing;
-            }
+
+            
+            
 
 
         }
         else
         {
+            float distanceToTarget = Vector2.Distance(transform.position, targetPos);
+
             isFirePressed = false;
             aimDir = transform.right;
             isAimPressed = false;
-
-            if (aiState == AIState.Attacking)
+            if (aiState == AIState.Spooked)
             {
                 aiState = AIState.Chasing;
+            }
+            else if (aiState == AIState.Attacking)
+            {
+                aiState = AIState.Chasing;
+            }
+            else if (aiState == AIState.Chasing && distanceToTarget < targetReachedTreshold.x)
+            {
+                aiState = AIState.Searching;
+                targetPos = new Vector3(targetPos.x + (controller.facingRight ? 10f : -10f), targetPos.y, targetPos.z);
             }
         }
 
@@ -139,11 +169,14 @@ public class TrooperAI : GroundAI
                 isFirePressed = false;
                 EvaluateMovement();
                 break;
+            case AIState.Searching:
+                isAimPressed = false;
+                isFirePressed = false;
+                EvaluateMovement();
+                break;
             default:
                 break;
         }
-
-
     }
 
     protected virtual void OnHit(Damage damage)
@@ -160,14 +193,19 @@ public class TrooperAI : GroundAI
         float targetDir = xDiff > 0f ? 1f : -1f;
 
         targetPos = new Vector3(pos.x + targetDir * 10f, pos.y, 0f);
-        aiState = AIState.Chasing;
-        
+        if (aiState == AIState.Guarding || aiState == AIState.Returning)
+        {
+            aiState = AIState.Spooked;
+            _spookTime = spookTime;
+        }
+
     }
 
     public override void TimerUpdate()
     {
         _lookCooldown -= Time.deltaTime;
         _attentionSpan -= Time.deltaTime;
+        _spookTime -= Time.deltaTime;
     }
 
     protected override void FindTarget()
@@ -224,7 +262,7 @@ public class TrooperAI : GroundAI
     public override void EdgeReached()
     {
         movementInput = new Vector2(0f, movementInput.y);
-        
+
     }
 
     public override void EvaluateMovement()
@@ -299,5 +337,10 @@ public class TrooperAI : GroundAI
     {
         self.onDamageReceivedEvent -= OnHit;
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(targetPos, 1f);
+    //}
 }
 

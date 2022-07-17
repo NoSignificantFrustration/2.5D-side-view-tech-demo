@@ -319,7 +319,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 444906472}
 --- !u!33 &52089041
@@ -1595,7 +1595,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29424
+  m_Name: pb_Mesh29434
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3231,7 +3231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &566467298
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3385,6 +3385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trooper (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 586689140504751715, guid: bdf702a339f9f214c9fa7392353360ba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 586689140504751722, guid: bdf702a339f9f214c9fa7392353360ba, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3431,11 +3435,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8448751569483572844, guid: bdf702a339f9f214c9fa7392353360ba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.77
       objectReference: {fileID: 0}
     - target: {fileID: 8448751569483572844, guid: bdf702a339f9f214c9fa7392353360ba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8448751569483572844, guid: bdf702a339f9f214c9fa7392353360ba, type: 3}
       propertyPath: m_AnchorMin.x

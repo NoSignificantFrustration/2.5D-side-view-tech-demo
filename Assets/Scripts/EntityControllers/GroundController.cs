@@ -217,6 +217,6 @@ public class GroundController : ControllerBase
     //private void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), new Vector3(-4, -4));
+    //    Gizmos.DrawRay(new Vector3(transform.position.x - 1f, transform.position.y + 1f, transform.position.z), Vector3.down * 4);
     //}
 }

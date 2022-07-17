@@ -25,7 +25,7 @@ public abstract class ControllerBase : MonoBehaviour
         gravity = new Vector3(0f, baseGravity);
         if (transform.localRotation.y == 0)
         {
-            //This looks counterintuitive, but it solves the problem
+            
             facingRight = true;
         }
 
@@ -40,7 +40,7 @@ public abstract class ControllerBase : MonoBehaviour
 
         if (input.isAimPressed)
         {
-            if (facingRight != input.aimDir.x > 0)
+            if (facingRight != input.aimDir.x < 0 && input.aimDir.x != 0)
             {
                 Flip();
             }
